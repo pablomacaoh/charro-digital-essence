@@ -1,4 +1,3 @@
-
 import { ArrowDown } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
@@ -31,20 +30,20 @@ const Hero = () => {
       speedY: number;
     }> = [];
 
-    // Generate particles
-    const particleCount = Math.min(window.innerWidth / 10, 120);
+    // Increase particle count and size for more visible animation
+    const particleCount = Math.min(window.innerWidth / 8, 150);
     
-    // Muted color palette
-    const colors = ['#E5DEFF', '#D3E4FD', '#F2FCE2', '#FDE1D3', '#FFDEE2'];
+    // More vibrant color palette while keeping it professional
+    const colors = ['#1E90FF33', '#48D1CC33', '#20B2AA33', '#87CEEB33', '#B0E0E633'];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 3 + 1,
+        radius: Math.random() * 4 + 2, // Increased particle size
         color: colors[Math.floor(Math.random() * colors.length)],
-        speedX: (Math.random() - 0.5) * 0.3,
-        speedY: (Math.random() - 0.5) * 0.3
+        speedX: (Math.random() - 0.5) * 0.8, // Increased speed
+        speedY: (Math.random() - 0.5) * 0.8  // Increased speed
       });
     }
 
@@ -57,7 +56,7 @@ const Hero = () => {
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
         ctx.fillStyle = particle.color;
-        ctx.globalAlpha = 0.6;
+        ctx.globalAlpha = 0.8; // Increased opacity
         ctx.fill();
         
         // Update position
@@ -81,11 +80,11 @@ const Hero = () => {
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 100) {
+          if (distance < 120) { // Increased connection distance
             ctx.beginPath();
-            ctx.strokeStyle = '#F1F0FB';
-            ctx.globalAlpha = 0.2 * (1 - distance / 100);
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = '#10728b33'; // Match the base color
+            ctx.globalAlpha = 0.3 * (1 - distance / 120);
+            ctx.lineWidth = 1; // Slightly thicker lines
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
@@ -105,11 +104,10 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen pt-20 flex items-center relative overflow-hidden">
-      {/* Animated background canvas */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 -z-10"
-        style={{ background: 'linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)' }}
+        style={{ background: '#10728b4d' }}
       />
       
       <div className="container mx-auto px-6 md:px-8 py-16 md:py-24">
@@ -144,7 +142,6 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <a href="#services" className="text-charro-400 hover:text-charro-600 transition-colors">
           <ArrowDown size={30} />
