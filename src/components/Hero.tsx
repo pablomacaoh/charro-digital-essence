@@ -107,7 +107,9 @@ const Hero = () => {
     <section id="home" className="min-h-screen pt-20 flex items-center relative overflow-hidden">
       <div 
         className="absolute inset-0 -z-10" 
-        style={{ background: '#10728b4d' }}
+        style={{ 
+          background: 'linear-gradient(135deg, #10728b4d 0%, #10728b4d 100%), linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)' 
+        }}
       />
       <canvas 
         ref={canvasRef} 
