@@ -35,16 +35,16 @@ const Hero = () => {
     const particleCount = Math.min(window.innerWidth / 8, 150);
     
     // More vibrant color palette for better visibility
-    const colors = ['#8B5CF680', '#D946EF80', '#F9731680', '#0EA5E980'];
+    const colors = ['#8B5CF6B0', '#D946EFB0', '#F97316B0', '#0EA5E9B0'];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 5 + 3, // Larger bubbles
+        radius: Math.random() * 6 + 4, // Even larger bubbles for visibility
         color: colors[Math.floor(Math.random() * colors.length)],
-        speedX: (Math.random() - 0.5) * 0.8,
-        speedY: (Math.random() - 0.5) * 0.8
+        speedX: (Math.random() - 0.5) * 1.2, // Increased speed
+        speedY: (Math.random() - 0.5) * 1.2  // Increased speed
       });
     }
 
@@ -81,11 +81,11 @@ const Hero = () => {
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 120) {
+          if (distance < 150) { // Increased connection distance
             ctx.beginPath();
-            ctx.strokeStyle = '#10728bAA'; // More opaque connections
-            ctx.globalAlpha = 0.4 * (1 - distance / 120);
-            ctx.lineWidth = 1.5; // Thicker lines
+            ctx.strokeStyle = '#10728BCC'; // More opaque connections
+            ctx.globalAlpha = 0.5 * (1 - distance / 150);
+            ctx.lineWidth = 2; // Thicker lines
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
@@ -105,10 +105,13 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen pt-20 flex items-center relative overflow-hidden">
+      <div 
+        className="absolute inset-0 -z-10" 
+        style={{ background: 'linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)' }}
+      />
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 -z-10"
-        style={{ background: 'linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)' }}
       />
       
       <div className="container mx-auto px-6 md:px-8 py-16 md:py-24">
