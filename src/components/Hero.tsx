@@ -1,14 +1,116 @@
 
 import { ArrowDown } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 
 const Hero = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas dimensions
+    const setDimensions = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    setDimensions();
+    window.addEventListener('resize', setDimensions);
+
+    // Particles configuration
+    const particles: Array<{
+      x: number;
+      y: number;
+      radius: number;
+      color: string;
+      speedX: number;
+      speedY: number;
+    }> = [];
+
+    // Generate particles
+    const particleCount = Math.min(window.innerWidth / 10, 120);
+    
+    // Muted color palette
+    const colors = ['#E5DEFF', '#D3E4FD', '#F2FCE2', '#FDE1D3', '#FFDEE2'];
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 3 + 1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3
+      });
+    }
+
+    // Animation loop
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw and update particles
+      particles.forEach(particle => {
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        ctx.fillStyle = particle.color;
+        ctx.globalAlpha = 0.6;
+        ctx.fill();
+        
+        // Update position
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+        
+        // Bounce off edges
+        if (particle.x < 0 || particle.x > canvas.width) {
+          particle.speedX *= -1;
+        }
+        
+        if (particle.y < 0 || particle.y > canvas.height) {
+          particle.speedY *= -1;
+        }
+      });
+      
+      // Create connections between nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 100) {
+            ctx.beginPath();
+            ctx.strokeStyle = '#F1F0FB';
+            ctx.globalAlpha = 0.2 * (1 - distance / 100);
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      
+      requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      window.removeEventListener('resize', setDimensions);
+    };
+  }, []);
+
   return (
     <section id="home" className="min-h-screen pt-20 flex items-center relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-100/30 blur-3xl"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-80 h-80 rounded-full bg-gray-100/50 blur-3xl"></div>
-      </div>
+      {/* Animated background canvas */}
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 -z-10"
+        style={{ background: 'linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)' }}
+      />
       
       <div className="container mx-auto px-6 md:px-8 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center">
