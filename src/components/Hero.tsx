@@ -21,30 +21,36 @@ const Hero = () => {
     setDimensions();
     window.addEventListener('resize', setDimensions);
 
-    // Particles configuration
-    const particles: Array<{
+    // More geometric shapes like creai.mx - triangles, squares, circles
+    const shapes: Array<{
       x: number;
       y: number;
-      radius: number;
+      type: 'circle' | 'square' | 'triangle';
+      size: number;
       color: string;
+      rotation: number;
       speedX: number;
       speedY: number;
+      rotationSpeed: number;
     }> = [];
 
-    // Increase particle count and size for more obvious animation
-    const particleCount = Math.min(window.innerWidth / 8, 150);
+    // Create a variety of geometric shapes
+    const shapeCount = Math.min(window.innerWidth / 10, 120);
     
-    // More vibrant color palette for better visibility
-    const colors = ['#8B5CF6B0', '#D946EFB0', '#F97316B0', '#0EA5E9B0'];
+    // Branded color palette with more vibrant colors similar to creai.mx
+    const colors = ['#8B5CF6B0', '#D946EFB0', '#F97316B0', '#0EA5E9B0', '#10728BB0'];
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
+    for (let i = 0; i < shapeCount; i++) {
+      shapes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 6 + 4, // Even larger bubbles for visibility
+        type: ['circle', 'square', 'triangle'][Math.floor(Math.random() * 3)] as 'circle' | 'square' | 'triangle',
+        size: Math.random() * 8 + 3, 
         color: colors[Math.floor(Math.random() * colors.length)],
-        speedX: (Math.random() - 0.5) * 1.2, // Increased speed
-        speedY: (Math.random() - 0.5) * 1.2  // Increased speed
+        rotation: Math.random() * Math.PI * 2,
+        speedX: (Math.random() - 0.5) * 0.8,
+        speedY: (Math.random() - 0.5) * 0.8,
+        rotationSpeed: (Math.random() - 0.5) * 0.02
       });
     }
 
@@ -52,42 +58,62 @@ const Hero = () => {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Draw and update particles
-      particles.forEach(particle => {
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color;
-        ctx.globalAlpha = 0.9; // Higher opacity for better visibility
-        ctx.fill();
+      // Draw and update shapes
+      shapes.forEach(shape => {
+        ctx.save();
+        ctx.translate(shape.x, shape.y);
+        ctx.rotate(shape.rotation);
+        ctx.fillStyle = shape.color;
+        ctx.globalAlpha = 0.8;
         
-        // Update position
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
-        
-        // Bounce off edges
-        if (particle.x < 0 || particle.x > canvas.width) {
-          particle.speedX *= -1;
+        // Draw different shapes
+        if (shape.type === 'circle') {
+          ctx.beginPath();
+          ctx.arc(0, 0, shape.size, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (shape.type === 'square') {
+          ctx.fillRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size);
+        } else if (shape.type === 'triangle') {
+          ctx.beginPath();
+          ctx.moveTo(0, -shape.size);
+          ctx.lineTo(shape.size, shape.size);
+          ctx.lineTo(-shape.size, shape.size);
+          ctx.closePath();
+          ctx.fill();
         }
         
-        if (particle.y < 0 || particle.y > canvas.height) {
-          particle.speedY *= -1;
+        ctx.restore();
+        
+        // Update position and rotation
+        shape.x += shape.speedX;
+        shape.y += shape.speedY;
+        shape.rotation += shape.rotationSpeed;
+        
+        // Bounce off edges
+        if (shape.x < 0 || shape.x > canvas.width) {
+          shape.speedX *= -1;
+        }
+        
+        if (shape.y < 0 || shape.y > canvas.height) {
+          shape.speedY *= -1;
         }
       });
       
-      // Create connections between nearby particles
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
+      // Create connections between nearby shapes (spiderweb effect)
+      ctx.strokeStyle = '#10728B80';
+      ctx.lineWidth = 0.5;
+      
+      for (let i = 0; i < shapes.length; i++) {
+        for (let j = i + 1; j < shapes.length; j++) {
+          const dx = shapes[i].x - shapes[j].x;
+          const dy = shapes[i].y - shapes[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 150) { // Increased connection distance
+          if (distance < 180) {
             ctx.beginPath();
-            ctx.strokeStyle = '#10728BCC'; // More opaque connections
-            ctx.globalAlpha = 0.5 * (1 - distance / 150);
-            ctx.lineWidth = 2; // Thicker lines
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.moveTo(shapes[i].x, shapes[i].y);
+            ctx.lineTo(shapes[j].x, shapes[j].y);
+            ctx.globalAlpha = 0.2 * (1 - distance / 180);
             ctx.stroke();
           }
         }
