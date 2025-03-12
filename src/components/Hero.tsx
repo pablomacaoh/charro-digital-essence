@@ -37,8 +37,17 @@ const Hero = () => {
     // Create a variety of geometric shapes
     const shapeCount = Math.min(window.innerWidth / 10, 120);
     
-    // Branded color palette with more vibrant colors similar to creai.mx
-    const colors = ['#8B5CF6B0', '#D946EFB0', '#F97316B0', '#0EA5E9B0', '#10728BB0'];
+    // Updated color palette with white to #10728b4d range
+    const colors = [
+      '#FFFFFF80', // White with transparency
+      '#E6F3F780', // Very light blue with transparency
+      '#C8E6F080', // Light blue with transparency
+      '#A9D9E980', // Medium light blue with transparency
+      '#8ACCDF80', // Medium blue with transparency
+      '#6CBFD680', // Medium dark blue with transparency
+      '#4DB3CC80', // Dark blue with transparency
+      '#10728B80'  // Target color with transparency
+    ];
 
     for (let i = 0; i < shapeCount; i++) {
       shapes.push({
@@ -100,7 +109,7 @@ const Hero = () => {
       });
       
       // Create connections between nearby shapes (spiderweb effect)
-      ctx.strokeStyle = '#10728B80';
+      ctx.strokeStyle = '#10728B40'; // Updated connection line color
       ctx.lineWidth = 0.5;
       
       for (let i = 0; i < shapes.length; i++) {
