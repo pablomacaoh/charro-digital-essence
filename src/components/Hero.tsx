@@ -25,7 +25,6 @@ const Hero = () => {
       x: number;
       y: number;
       size: number;
-      color: string;
       speedX: number;
       speedY: number;
     }> = [];
@@ -33,24 +32,15 @@ const Hero = () => {
     // Create small circles
     const shapeCount = Math.min(window.innerWidth / 8, 150);
     
-    // Updated color palette with white to #10728b4d range
-    const colors = [
-      '#FFFFFF80', // White with transparency
-      '#E6F3F780', // Very light blue with transparency
-      '#C8E6F080', // Light blue with transparency
-      '#A9D9E980', // Medium light blue with transparency
-      '#8ACCDF80', // Medium blue with transparency
-      '#6CBFD680', // Medium dark blue with transparency
-      '#4DB3CC80', // Dark blue with transparency
-      '#10728B80'  // Target color with transparency
-    ];
+    // Single color for all circles - white with transparency
+    const circleColor = '#FFFFFF80';
 
     for (let i = 0; i < shapeCount; i++) {
       shapes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 4 + 1, // Smaller size for circles (1-5px)
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color: circleColor,
         speedX: (Math.random() - 0.5) * 0.8,
         speedY: (Math.random() - 0.5) * 0.8
       });
@@ -89,7 +79,7 @@ const Hero = () => {
       });
       
       // Create connections between nearby circles (spiderweb effect)
-      ctx.strokeStyle = '#10728B40'; // Updated connection line color
+      ctx.strokeStyle = '#FFFFFF40'; // Updated connection line color to match circles
       ctx.lineWidth = 0.5;
       
       for (let i = 0; i < shapes.length; i++) {
@@ -123,7 +113,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 -z-10" 
         style={{ 
-          background: 'linear-gradient(135deg, #10728b4d 0%, #10728b4d 100%), linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)' 
+          background: 'linear-gradient(135deg, #0a5068 0%, #0c6d94 100%), linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)' 
         }}
       />
       <canvas 
