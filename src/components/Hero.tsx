@@ -1,4 +1,3 @@
-
 import { ArrowDown } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
@@ -21,21 +20,18 @@ const Hero = () => {
     setDimensions();
     window.addEventListener('resize', setDimensions);
 
-    // More geometric shapes like creai.mx - triangles, squares, circles
+    // Changed to only use circles
     const shapes: Array<{
       x: number;
       y: number;
-      type: 'circle' | 'square' | 'triangle';
       size: number;
       color: string;
-      rotation: number;
       speedX: number;
       speedY: number;
-      rotationSpeed: number;
     }> = [];
 
-    // Create a variety of geometric shapes
-    const shapeCount = Math.min(window.innerWidth / 10, 120);
+    // Create small circles
+    const shapeCount = Math.min(window.innerWidth / 8, 150);
     
     // Updated color palette with white to #10728b4d range
     const colors = [
@@ -53,13 +49,10 @@ const Hero = () => {
       shapes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        type: ['circle', 'square', 'triangle'][Math.floor(Math.random() * 3)] as 'circle' | 'square' | 'triangle',
-        size: Math.random() * 8 + 3, 
+        size: Math.random() * 4 + 1, // Smaller size for circles (1-5px)
         color: colors[Math.floor(Math.random() * colors.length)],
-        rotation: Math.random() * Math.PI * 2,
         speedX: (Math.random() - 0.5) * 0.8,
-        speedY: (Math.random() - 0.5) * 0.8,
-        rotationSpeed: (Math.random() - 0.5) * 0.02
+        speedY: (Math.random() - 0.5) * 0.8
       });
     }
 
@@ -71,32 +64,19 @@ const Hero = () => {
       shapes.forEach(shape => {
         ctx.save();
         ctx.translate(shape.x, shape.y);
-        ctx.rotate(shape.rotation);
         ctx.fillStyle = shape.color;
         ctx.globalAlpha = 0.8;
         
-        // Draw different shapes
-        if (shape.type === 'circle') {
-          ctx.beginPath();
-          ctx.arc(0, 0, shape.size, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (shape.type === 'square') {
-          ctx.fillRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size);
-        } else if (shape.type === 'triangle') {
-          ctx.beginPath();
-          ctx.moveTo(0, -shape.size);
-          ctx.lineTo(shape.size, shape.size);
-          ctx.lineTo(-shape.size, shape.size);
-          ctx.closePath();
-          ctx.fill();
-        }
+        // Draw circles
+        ctx.beginPath();
+        ctx.arc(0, 0, shape.size, 0, Math.PI * 2);
+        ctx.fill();
         
         ctx.restore();
         
-        // Update position and rotation
+        // Update position
         shape.x += shape.speedX;
         shape.y += shape.speedY;
-        shape.rotation += shape.rotationSpeed;
         
         // Bounce off edges
         if (shape.x < 0 || shape.x > canvas.width) {
@@ -108,7 +88,7 @@ const Hero = () => {
         }
       });
       
-      // Create connections between nearby shapes (spiderweb effect)
+      // Create connections between nearby circles (spiderweb effect)
       ctx.strokeStyle = '#10728B40'; // Updated connection line color
       ctx.lineWidth = 0.5;
       
