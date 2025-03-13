@@ -1,5 +1,7 @@
 
-import { Monitor, LineChart, Database, Wrench, Globe, Zap, MessageCircle, Handshake} from 'lucide-react';
+import { Monitor, LineChart, Database, Wrench, Globe, Zap, MessageCircle, Handshake } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
 
 const Services = () => {
   const services = [
@@ -61,9 +63,17 @@ const Services = () => {
                 {service.icon}
               </div>
               <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
-              <p className="text-charro-600">{service.description}</p>
+              <p className="text-charro-600 mb-4">{service.description}</p>
             </div>
           ))}
+        </div>
+        
+        <div className="text-center mt-12">
+          <Link to="/services">
+            <Button size="lg" className="bg-accent hover:bg-accent/90">
+              Ver más detalles
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
