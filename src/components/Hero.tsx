@@ -34,8 +34,8 @@ const Hero = () => {
     // Create small circles
     const shapeCount = Math.min(window.innerWidth / 8, 150);
     
-    // Single color for all circles - white with transparency
-    const circleColor = '#FFFFFF80';
+    // Make circle color pure white (no transparency)
+    const circleColor = '#FFFFFF';
 
     for (let i = 0; i < shapeCount; i++) {
       shapes.push({
@@ -81,7 +81,7 @@ const Hero = () => {
       });
       
       // Create connections between nearby circles (spiderweb effect)
-      ctx.strokeStyle = '#FFFFFF40'; // Updated connection line color to match circles
+      ctx.strokeStyle = '#FFFFFF40'; // Keep slight transparency for connections
       ctx.lineWidth = 0.5;
       
       for (let i = 0; i < shapes.length; i++) {
@@ -115,7 +115,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 -z-10" 
         style={{ 
-          background: 'linear-gradient(135deg, #1A1F2C 0%, #333333 100%)' 
+          background: 'linear-gradient(135deg, #151822 0%, #222222 100%)' 
         }}
       />
       <canvas 
