@@ -1,3 +1,4 @@
+
 import { ArrowDown } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
@@ -114,7 +115,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 -z-10" 
         style={{ 
-          background: 'linear-gradient(135deg, #0a5068 0%, #0c6d94 100%), linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)' 
+          background: 'linear-gradient(135deg, #1A1F2C 0%, #333333 100%)' 
         }}
       />
       <canvas 
@@ -128,12 +129,12 @@ const Hero = () => {
             Servicios y Consultoría Digital
           </span>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-charro-900 mb-6 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white mb-6 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             Transformamos ideas en <br />
             <span className="text-accent">Excelencia Digital</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-charro-600 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: '0.4s' }}>
+          <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: '0.4s' }}>
             En <b>Charro.ai</b> revolucionamos la transformación digital. Impulsamos tu adopción de Inteligencia Artificial, fusionamos tecnologías y potenciamos la comunicación empresarial mediante WhatsApp, todo con un enfoque estratégico que convierte cada reto en una oportunidad de innovación.
           </p>
           
@@ -146,7 +147,7 @@ const Hero = () => {
             </a>
             <a 
               href="#contact" 
-              className="px-6 py-3 font-medium text-charro-700 bg-transparent border border-charro-200 rounded-md hover:bg-charro-50 transition-colors duration-300"
+              className="px-6 py-3 font-medium text-gray-300 bg-transparent border border-gray-600 rounded-md hover:bg-gray-800/50 transition-colors duration-300"
             >
               Contacto
             </a>
@@ -155,7 +156,7 @@ const Hero = () => {
       </div>
       
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <a href="#services" className="text-charro-400 hover:text-charro-600 transition-colors">
+        <a href="#services" className="text-gray-400 hover:text-gray-200 transition-colors">
           <ArrowDown size={30} />
         </a>
       </div>
