@@ -131,7 +131,7 @@ const Hero = () => {
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white mb-6 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             Transformamos ideas en <br />
-            <span className="text-accent">Excelencia Digital</span>
+            <span className="text-gray-100">Excelencia Digital</span>
           </h1>
           
           <p className="text-lg md:text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: '0.4s' }}>
