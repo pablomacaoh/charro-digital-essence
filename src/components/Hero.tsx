@@ -27,6 +27,7 @@ const Hero = () => {
       size: number;
       speedX: number;
       speedY: number;
+      color: string;
     }> = [];
 
     // Create small circles
