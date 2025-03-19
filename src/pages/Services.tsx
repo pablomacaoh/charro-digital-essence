@@ -5,10 +5,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const ServicesPage = () => {
-  const [activeService, setActiveService] = useState(0);
-
   const services = [
     {
       icon: <Monitor className="h-10 w-10" />,
@@ -101,69 +100,67 @@ const ServicesPage = () => {
           </div>
         </section>
         
-        {/* Services Navigation and Details */}
+        {/* Services Tabs */}
         <section className="py-16 bg-charro-50">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              {/* Services Navigation */}
-              <div className="lg:col-span-4">
-                <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h2 className="text-2xl font-semibold mb-6">Soluciones</h2>
-                  <nav className="flex flex-col space-y-2">
+            <Tabs defaultValue="0" className="w-full">
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/3">
+                  <TabsList className="flex flex-col gap-2 w-full h-auto bg-transparent">
                     {services.map((service, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setActiveService(index)}
+                      <TabsTrigger 
+                        key={index} 
+                        value={index.toString()}
                         className={cn(
-                          "p-4 rounded-lg text-left flex items-center gap-3 transition-colors",
-                          activeService === index 
-                            ? "bg-charro-100 text-accent" 
-                            : "hover:bg-charro-50"
+                          "p-4 rounded-lg text-left flex items-center gap-3 justify-start transition-colors w-full border",
+                          "data-[state=active]:bg-white data-[state=active]:border-charro-100 data-[state=active]:shadow-sm",
+                          "data-[state=inactive]:bg-transparent data-[state=inactive]:border-transparent"
                         )}
                       >
                         <div className="shrink-0">
                           {service.icon}
                         </div>
                         <span className="font-medium">{service.title}</span>
-                      </button>
+                      </TabsTrigger>
                     ))}
-                  </nav>
+                  </TabsList>
+                </div>
+                
+                <div className="md:w-2/3">
+                  {services.map((service, index) => (
+                    <TabsContent key={index} value={index.toString()} className="mt-0">
+                      <div className="bg-white rounded-xl shadow-sm p-8">
+                        <div className="flex items-center gap-4 mb-6">
+                          <div className="w-16 h-16 flex items-center justify-center rounded-lg bg-charro-50 text-accent">
+                            {service.icon}
+                          </div>
+                          <h2 className="text-3xl font-display font-bold">
+                            {service.title}
+                          </h2>
+                        </div>
+                        
+                        <p className="text-lg text-charro-600 mb-8">
+                          {service.description}
+                        </p>
+                        
+                        <ul className="space-y-4 mb-8">
+                          {service.details.map((detail, idx) => (
+                            <li key={idx} className="flex items-start gap-3">
+                              <Check className="h-5 w-5 text-accent shrink-0 mt-1" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        
+                        <Button size="lg" className="mt-4">
+                          Solicitar información
+                        </Button>
+                      </div>
+                    </TabsContent>
+                  ))}
                 </div>
               </div>
-              
-              {/* Service Details */}
-              <div className="lg:col-span-8">
-                <div className="bg-white rounded-xl shadow-sm p-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 flex items-center justify-center rounded-lg bg-charro-50 text-accent">
-                      {services[activeService].icon}
-                    </div>
-                    <h2 className="text-3xl font-display font-bold">
-                      {services[activeService].title}
-                    </h2>
-                  </div>
-                  
-                  <p className="text-lg text-charro-600 mb-8">
-                    {services[activeService].description}
-                  </p>
-                  
-                  <h3 className="text-xl font-semibold mb-4">Lo que ofrecemos:</h3>
-                  
-                  <ul className="space-y-4 mb-8">
-                    {services[activeService].details.map((detail, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-accent shrink-0 mt-1" />
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <Button size="lg" className="mt-4">
-                    Solicitar información
-                  </Button>
-                </div>
-              </div>
-            </div>
+            </Tabs>
           </div>
         </section>
       </main>
